@@ -78,7 +78,7 @@ resource "aws_security_group" "pwdemo-sg" {
   } 
 }
 
-resource "aws_instance" "pwdemo-server" {
+resource "aws_instance" "var.env_prefix" {
     ami = "ami-0f19d220602031aed"
     instance_type = "t2.micro"
 
