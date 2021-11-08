@@ -90,10 +90,10 @@ resource "aws_security_group" "pwdemo-sg" {
     ##}   
 ##}
 
-resource "aws_key_pair" "ssh-key"{
-    key_name = "server-key-pair"
-    public_key = file(var.public_key_location)
-}
+#resource "aws_key_pair" "ssh-key"{
+#    key_name = "server-key-pair"
+#    public_key = file(var.public_key_location)
+#}
 
 resource "aws_instance" "pwdemo_server" {
     ami = "ami-0f19d220602031aed"
@@ -104,7 +104,7 @@ resource "aws_instance" "pwdemo_server" {
     availability_zone = var.avail_zone
    
     associate_public_ip_address = true 
-    key_name = "aws_key_pair.ssh-key.key_name"
+    key_name = "server-key-pair"
 
     tags = {
       Name = "${var.env_prefix}-server"
