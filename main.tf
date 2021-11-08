@@ -80,25 +80,23 @@ resource "aws_security_group" "pwdemo-sg" {
   } 
 }
 
-data "aws_ami" "latest-amazon-linux-image" {
-    most_recent = true
-    owners = ["amazon"]
-    filter {
-      name = "name"
-      values = ["amzn2-ami-hvm-*-x86_64-gp2"]
-    filter {
-      name = "virtualization-type"
-      values = ["hvm"]
-    }   
-}
+## data "aws_ami" "latest-amazon-linux-image" {
+##    filter {
+##    name = "name"
+##      values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+##    filter {
+  ##    name = "virtualization-type"
+  ##    values = ["hvm"]
+    ##}   
+##}
 
 resource "aws_key_pair" "ssh-key"{
-    key_name = "server-key"
+    key_name = "server-key-pair"
     public_key = file(var.public_key_location)
 }
 
 resource "aws_instance" "pwdemo_server" {
-    ami = data.aws_ami.latest-amazon-linux-image.id
+    ami = "ami-0f19d220602031aed"
     instance_type = var.instance_type
 
     subnet_id = aws_subnet.pwdemo-subnet-1.id
