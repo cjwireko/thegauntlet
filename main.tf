@@ -5,7 +5,9 @@ variable vpc_cidr_block {}
 variable subnet_cidr_block {}
 variable avail_zone {}
 variable env_prefix {}
-variable "ssh_key" {}
+variable ssh_key {}
+variable instance_type {}
+variable public_key_location   {}
 
 resource "aws_vpc" "pwdemo-vpc" {
   cidr_block = var.vpc_cidr_block
@@ -78,9 +80,24 @@ resource "aws_security_group" "pwdemo-sg" {
   } 
 }
 
-resource "aws_instance" "var.env_prefix" {
-    ami = "ami-0f19d220602031aed"
-    instance_type = "t2.micro"
+data "aws_ami" "latest-amazon-linux-image" {
+    most_recent = true
+    owners = ["amazon"]
+    filter {
+      name = "name"
+      values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+    filter {
+      name = "virtualization-type"
+      values = ["hvm"]
+    }   
+}
+
+resource "aws_key_pair" "ssh-key"{
+    key_name = "server-key"
+    public_key = file(var.public_key_location)
+resource "aws_instance" "pwdemo_server" {
+    ami = data.aws_ami.latest-amazon-linux-image.id
+    instance_type = var.instance_type
 
     subnet_id = aws_subnet.pwdemo-subnet-1.id
     vpc_security_group_ids = [aws_security_group.pwdemo-sg.id]
