@@ -54,18 +54,12 @@ resource "aws_security_group" "pwdemo-sg" {
   vpc_id = aws_vpc.pwdemo-vpc.id
 
   ingress {
-      from_port = 22
-      to_port = 22
-      protocol = "tcp"
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
       cidr_blocks = ["0.0.0.0/0"]
+      prefix_list_ids = []
   } 
-
-  ingress {
-      from_port = 8080
-      to_port = 8080
-      protocol = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-  }    
 
   egress {
       from_port = 0
@@ -80,21 +74,6 @@ resource "aws_security_group" "pwdemo-sg" {
   } 
 }
 
-## data "aws_ami" "latest-amazon-linux-image" {
-##    filter {
-##    name = "name"
-##      values = ["amzn2-ami-hvm-*-x86_64-gp2"]
-##    filter {
-  ##    name = "virtualization-type"
-  ##    values = ["hvm"]
-    ##}   
-##}
-
-#resource "aws_key_pair" "ssh-key"{
-#    key_name = "server-key-pair"
-#    public_key = file(var.public_key_location)
-#}
-
 resource "aws_instance" "pwdemo_server" {
     ami = "ami-0f19d220602031aed"
     instance_type = var.instance_type
@@ -107,6 +86,6 @@ resource "aws_instance" "pwdemo_server" {
     key_name = "server-key-pair"
 
     tags = {
-      Name = "${var.env_prefix}-server"
+      Name = "${var.env_prefix}_server"
     }
 }
