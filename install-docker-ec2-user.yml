@@ -27,7 +27,6 @@
         name: 
           - docker
           - docker-compose
-    
 
 - name: Add ec2-user to docker group
   hosts: dev_server
@@ -41,3 +40,6 @@
     - name: Reconnect to server session
       ansible.builtin.meta: reset_connection
 
+
+
+ 
