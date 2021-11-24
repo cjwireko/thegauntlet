@@ -16,6 +16,6 @@ docker-compose up
 
 ### Access
 
-* API: http://localhost:5000/flask-prometheus-grafana-example/
+* API: http://localhost:5000/ping
 * Prometheus: http://localhost:9090/
 * Grafana: http://localhost:3000 `[username: admin, password: admin`

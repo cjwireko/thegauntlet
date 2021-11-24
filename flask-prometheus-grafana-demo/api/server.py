@@ -13,10 +13,10 @@ metrics = PrometheusMetrics(api)
 metrics.info("app_info", "App Info, this can be anything you want", version="1.0.0")
 
 
-@api.route("/flask-prometheus-grafana-demo/")
-def hello():
-    return jsonify(say_hello())
+@api.route('/ping')
+def ping():
+    return jsonify(say_pong())
 
 
-def say_hello():
-    return {"message":"pong"}
+def say_pong():
+    return {"message": "pong"}
