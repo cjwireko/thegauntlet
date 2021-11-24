@@ -39,7 +39,3 @@
         append: yes
     - name: Reconnect to server session
       ansible.builtin.meta: reset_connection
-
-
-
- 

@@ -1,0 +1,50 @@
+version: "3.5"
+networks:
+  monitoring:
+    driver: bridge
+services:
+  flask-api:
+    build:
+      context: ./api
+    restart: unless-stopped
+    container_name: flask-api
+    image: example-flask-api
+    ports:
+      - "5000:5000"
+    expose:
+      - 5000
+    networks:
+      - monitoring
+   demo-prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    container_name: demo-prometheus
+    ports:
+      - 9090:9090
+    expose:
+      - 9090
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - monitoring
+  demo-grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    user: "472"
+    container_name: demo-grafana
+    depends_on:
+      - demo-prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ./monitoring/datasource.yml:/etc/grafana/provisioning/datasource.yml
+    env_file:
+      - ./monitoring/config.monitoring
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge
