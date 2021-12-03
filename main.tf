@@ -86,6 +86,6 @@ resource "aws_instance" "pwdemo_server" {
     key_name = "server-key-pair"
 
     tags = {
-      Name = "${var.env_prefix}_server"
+      Name = "${var.env_prefix}-server"
     }
 }

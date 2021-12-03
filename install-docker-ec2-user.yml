@@ -1,6 +1,6 @@
 ---
 - name: Install python3, docker, docker-compose
-  hosts: dev_server
+  hosts: dev-server
   become: yes
   gather_facts: False
   tasks:
@@ -11,6 +11,7 @@
         name: 
           - python3
           - docker
+          - pip
         update_cache: yes
         state: present
     - name: Install Docker-compose
@@ -29,7 +30,7 @@
           - docker-compose
 
 - name: Add ec2-user to docker group
-  hosts: dev_server
+  hosts: dev-server
   become: yes
   tasks: 
     - name: Add ec2-user to docker group

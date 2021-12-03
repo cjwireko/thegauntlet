@@ -1,7 +1,5 @@
 version: "3.5"
-networks:
-  monitoring:
-    driver: bridge
+
 services:
   flask-api:
     build:
@@ -11,24 +9,24 @@ services:
     image: example-flask-api
     ports:
       - "5000:5000"
-    expose:
-      - 5000
     networks:
-      - monitoring
-   demo-prometheus:
+      example-network:
+        ipv4_address: 172.16.238.10
+
+  demo-prometheus:
     image: prom/prometheus:latest
     restart: unless-stopped
     container_name: demo-prometheus
     ports:
       - 9090:9090
-    expose:
-      - 9090
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     networks:
-      - monitoring
+      example-network:
+        ipv4_address: 172.16.238.11
+
   demo-grafana:
     image: grafana/grafana:latest
     restart: unless-stopped
@@ -43,8 +41,14 @@ services:
     env_file:
       - ./monitoring/config.monitoring
     networks:
-      - monitoring
+      example-network:
+        ipv4_address: 172.16.238.12
 
 networks:
-  monitoring:
+  example-network:
+    name: example-network
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.238.0/24
