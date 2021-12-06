@@ -12,6 +12,6 @@
 hosts
 
 # extras
-extras
+extras folder
 # ansible config
 ansible.cfg
