@@ -30,16 +30,14 @@ services:
   demo-grafana:
     image: grafana/grafana:latest
     restart: unless-stopped
-    user: "472"
     container_name: demo-grafana
-    depends_on:
-      - demo-prometheus
     ports:
       - 3000:3000
     volumes:
-      - ./monitoring/datasource.yml:/etc/grafana/provisioning/datasource.yml
-    env_file:
-      - ./monitoring/config.monitoring
+      - ./monitoring/grafana/config.ini:/etc/grafana/grafana.ini
+      - ./monitoring/grafana/datasource.yml:/etc/grafana/provisioning/datasources/default.yml
+      - ./monitoring/grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/default.yml
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
     networks:
       example-network:
         ipv4_address: 172.16.238.12
