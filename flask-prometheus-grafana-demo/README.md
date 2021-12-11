@@ -18,5 +18,4 @@ docker-compose up
 
 * API: http://localhost:5000/ping
 * Prometheus: http://localhost:9090/
-* Grafana: http://localhost:3000 `[username: admin, password: admin]`
-* Set up prometheus as datasource in grafana instance and import `dashboard.json` to visualize `http_requests_total` for endpoint
+* Grafana: http://localhost:3000 
