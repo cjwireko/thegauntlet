@@ -15,4 +15,5 @@ Create a simple webserver and scrape its metrics using Prometheus. Configure Gra
 - Set up Prometheus to scrape the web application.
 - Set up Grafana using Prometheus as the data source.
 - Create a graph in Grafana displaying the scraped metric from the web application.
-- Create a pull request with your changes and tag @highlycaffeinated when you're ready for the team to review 
+- Create a pull request with your changes and tag @highlycaffeinated when you're ready for the team to review.
+
